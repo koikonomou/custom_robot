@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <robot name="robotiq_c2_model" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	<xacro:include filename="$(find custom_robot)/urdf/robotiq_model.xacro"/>
+	<!-- <xacro:include filename="$(find custom_robot)/urdf/transmission.xacro"/> -->
+
   	<!-- <xacro:macro name="robotiq_c2_model" params="prefix transmission_hw_interface:=hardware_interface/EffortJointInterface"> -->
 
     <link name="world" />
@@ -32,7 +34,7 @@
       </collision>
     </link>
     <gazebo reference="box">
-      <material>Gazebo/Black</material>
+      <material>Gazebo/Grey</material>
       <mu1>50.0</mu1>
       <mu2>50.0</mu2>
       <kp>1000000.0</kp>
@@ -61,7 +63,7 @@
       </collision>
     </link>
     <gazebo reference="box_table">
-      <material>Gazebo/Black</material>
+      <material>Gazebo/Grey</material>
       <mu1>50.0</mu1>
       <mu2>50.0</mu2>
       <kp>1000000.0</kp>
@@ -74,7 +76,7 @@
     </joint>
 
 
-    <link name="arm_base">
+    <link name="arm_base_link">
       <inertial>
         <mass value="1.0" />
         <origin xyz="0 0 0" />
@@ -95,21 +97,21 @@
         </geometry>
       </collision>
     </link>
-    <gazebo reference="arm_base">
+    <gazebo reference="arm_base_link">
       <material>Gazebo/Red</material>
       <mu1>50.0</mu1>
       <mu2>50.0</mu2>
       <kp>1000000.0</kp>
       <kd>1.0</kd>
     </gazebo>
-    <joint name="arm_base_link" type="prismatic">
+    <joint name="arm_base" type="prismatic">
       <parent link="box" />
-      <child link="arm_base" />
-      <limit effort="100.0" lower="-0.45" upper="0.45" velocity="0.5"/>
+      <child link="arm_base_link" />
+      <limit effort="10000.0" lower="-0.45" upper="0.45" velocity="0.2"/>
       <origin xyz="0.0 0.0 0.325" rpy="0.0 0.0 0.0" />
     </joint>
 
-    <link name="joint_a1">
+    <link name="joint_a1_link">
       <inertial>
         <mass value="1.0" />
         <origin xyz="0 0 0" />
@@ -130,22 +132,24 @@
         </geometry>
       </collision>
     </link>
-    <gazebo reference="joint_a1">
+    <gazebo reference="joint_a1_link">
       <material>Gazebo/Red</material>
       <mu1>50.0</mu1>
       <mu2>50.0</mu2>
       <kp>1000000.0</kp>
       <kd>1.0</kd>
+      <turnGravityOff>true</turnGravityOff>
+
     </gazebo>
-    <joint name="joint_a1_link" type="prismatic">
-      <parent link="arm_base" />
-      <child link="joint_a1" />
-      <limit effort="100.0" lower="-0.35" upper="0.15" velocity="0.5"/>
+    <joint name="joint_a1" type="prismatic">
+      <parent link="arm_base_link" />
+      <child link="joint_a1_link" />
+      <limit effort="10000.0" lower="-0.35" upper="0.15" velocity="0.2"/>
       <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 1.57" />
     </joint>
 
     <joint name="hand_joint" type="fixed">
-      <parent link="joint_a1" />
+      <parent link="joint_a1_link" />
       <child link="robotiq_85_adapter_link" />
       <origin xyz="-0.3 0.0 -0.025" rpy="0.0 1.57 0.0" />
     </joint>
