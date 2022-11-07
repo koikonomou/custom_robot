@@ -14,9 +14,11 @@ find_package(catkin REQUIRED COMPONENTS
   robot_state_publisher
   moveit_kinematics
   robotiq_2f_c2_gripper_visualization
+  roboticsgroup_upatras_gazebo_plugins
 )
 catkin_package( CATKIN_DEPENDS
   robotiq_2f_c2_gripper_visualization
+  roboticsgroup_upatras_gazebo_plugins
 
 )
 

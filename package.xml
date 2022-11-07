@@ -29,7 +29,8 @@
   <build_depend>position_controllers</build_depend>
   <build_depend>gazebo</build_depend>
   <build_depend>robotiq_2f_c2_gripper_visualization</build_depend>
-
+  <build_depend>roboticsgroup_upatras_gazebo_plugins</build_depend>
+  
   <build_export_depend>controller_manager</build_export_depend>
   <build_export_depend>effort_controllers</build_export_depend>
   <build_export_depend>gazebo_ros</build_export_depend>
@@ -42,7 +43,8 @@
   <build_export_depend>position_controllers</build_export_depend>
   <build_export_depend>gazebo</build_export_depend>
   <build_export_depend>robotiq_2f_c2_gripper_visualization</build_export_depend>
-  
+  <build_export_depend>roboticsgroup_upatras_gazebo_plugins</build_export_depend>
+
   <exec_depend>xacro</exec_depend>
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>effort_controllers</exec_depend>
