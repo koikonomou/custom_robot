@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <env name="GAZEBO_MODEL_PATH" value="$(find custom_robot)/models"/>
+  <!-- <env name="GAZEBO_MODEL_PATH" value="$(find custom_robot)/models"/> -->
   <arg name="paused" default="false" />
   <arg name="use_sim_time" default="true" />
   <arg name="gui" default="true" />
@@ -8,29 +8,39 @@
   <arg name="verbose" default="true" />
   <arg name="rviz" default="true"/>
   <arg name="rviz_conf" default="$(find custom_robot)/rviz/config.rviz"/>
-  <param name="use_gui" value="$(arg gui)"/>
+  <!-- <param name="use_gui" value="$(arg gui)"/> -->
+  
   <!-- Gazebo world file to load. -->
   <!-- <arg name="world_name" value="$(find custom_robot)/worlds/bottle.world"/> -->
 
-  <group ns="/">
-    <!-- We reuse the logic in empty_world.launch, changing only the name of the world to be launched -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-      <arg name="paused" value="$(arg paused)" />
-      <arg name="use_sim_time" value="$(arg use_sim_time)" />
-      <arg name="gui" value="$(arg gui)" />
-      <arg name="debug" value="$(arg debug)" />
-      <arg name="verbose" value="$(arg verbose)" />
-      <!-- <arg name="world_name" value="$(arg world_name)" /> -->
-      <!-- <arg name= "extra_gazebo_args" value="$(extra_gazebo_args)"/> -->
-    </include>
-  </group>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="use_sim_time" value="$(arg use_sim_time)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="verbose" value="$(arg verbose)" />
+    <!-- <arg name="world_name" value="$(arg world_name)" /> -->
+    <!-- <arg name= "extra_gazebo_args" value="$(extra_gazebo_args)"/> -->
+  </include>
+
 
 
   <param name="robot_description" command="$(find xacro)/xacro '$(find custom_robot)/urdf/pr_robot.urdf.xacro'"/>
   <node name="robotiq_c2_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description  -model robotiq_c2_model" respawn="false" output="screen" />
 
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher_full_pos"/>
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />    <!-- <rosparam param="source_list">["kuka_kr4r600/joint_states"]</rosparam> -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" respawn="true" output="screen"/>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+    <rosparam param="source_list">["robotiq_c2_model/joint_states"]</rosparam> 
+  </node>
+    
+  <rosparam file="$(find custom_robot)/controllers/position_controllers.yaml" command="load"/>
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" 
+    output="screen" ns="/robotiq_c2_model" args="
+    joint_a1_position_controller joint_a2_position_controller joint_a3_position_controller joint_state_controller "/>  
+    
   <!--Load Rviz -->
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_conf)" if="$(arg rviz)"/>
