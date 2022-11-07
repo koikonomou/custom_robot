@@ -11,7 +11,7 @@
   <!-- <param name="use_gui" value="$(arg gui)"/> -->
   
   <!-- Gazebo world file to load. -->
-  <!-- <arg name="world_name" value="$(find custom_robot)/worlds/bottle.world"/> -->
+  <arg name="world_name" value="$(find custom_robot)/worlds/box.world"/>
 
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -20,8 +20,7 @@
     <arg name="gui" value="$(arg gui)" />
     <arg name="debug" value="$(arg debug)" />
     <arg name="verbose" value="$(arg verbose)" />
-    <!-- <arg name="world_name" value="$(arg world_name)" /> -->
-    <!-- <arg name= "extra_gazebo_args" value="$(extra_gazebo_args)"/> -->
+    <arg name="world_name" value="$(arg world_name)" />
   </include>
 
 
@@ -39,7 +38,7 @@
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" 
     output="screen" ns="/robotiq_c2_model" args="
-    joint_a1_position_controller joint_a2_position_controller joint_a3_position_controller joint_state_controller "/>  
+    base joint_a1 gripper joint_state_controller "/>  
     
   <!--Load Rviz -->
 

@@ -4,15 +4,15 @@ robotiq_c2_model:
         type: joint_state_controller/JointStateController
         publish_rate: 100
 
-    joint_a1_position_controller:
+    base:
         type: effort_controllers/JointPositionController
         joint: arm_base
         pid: {p: 100.0, i: 100.0, d: 100.0}
-    joint_a2_position_controller:
+    joint_a1:
         type: effort_controllers/JointPositionController
         joint: joint_a1
         pid: {p: 100.0, i: 100.0, d: 100.0}
-    joint_a3_position_controller:
+    gripper:
         type: effort_controllers/JointPositionController
         joint: robotiq_85_left_knuckle_joint
         pid: {p: 100.0, i: 100.0, d: 100.0}
