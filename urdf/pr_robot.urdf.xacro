@@ -1,0 +1,153 @@
+<?xml version="1.0" ?>
+<robot name="robotiq_c2_model" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:include filename="$(find custom_robot)/urdf/robotiq_model.xacro"/>
+  	<!-- <xacro:macro name="robotiq_c2_model" params="prefix transmission_hw_interface:=hardware_interface/EffortJointInterface"> -->
+
+    <link name="world" />
+
+    <joint name="rh_world_joint" type="fixed">
+      <parent link="world" />
+      <child link="box" />
+      <origin xyz="0.0 0.0 0.3" rpy="0.0 0.0 0.0" />
+    </joint>
+    <link name="box">
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1" ixy="0"  ixz="0"
+                 iyy="1" iyz="0"
+                 izz="1" />
+      </inertial> 
+      <visual>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <box size="1.0 0.05 0.6" />
+        </geometry>
+      </visual> 
+      <collision>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <box size="1.0 0.05 0.6" />
+        </geometry>
+      </collision>
+    </link>
+    <gazebo reference="box">
+      <material>Gazebo/Black</material>
+      <mu1>50.0</mu1>
+      <mu2>50.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>1.0</kd>
+    </gazebo>
+
+    <link name="box_table">
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1" ixy="0"  ixz="0"
+                 iyy="1" iyz="0"
+                 izz="1" />
+      </inertial> 
+      <visual>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <box size="1.0 0.7 0.50" />
+        </geometry>
+      </visual> 
+      <collision>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <box size="1.0 0.7 0.50" />
+        </geometry>
+      </collision>
+    </link>
+    <gazebo reference="box_table">
+      <material>Gazebo/Black</material>
+      <mu1>50.0</mu1>
+      <mu2>50.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>1.0</kd>
+    </gazebo>
+    <joint name="table_box_joint" type="fixed">
+      <parent link="world" />
+      <child link="box_table" />
+      <origin xyz="0.0 -0.35 0.225" rpy="0.0 0.0 0.0" />
+    </joint>
+
+
+    <link name="arm_base">
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1" ixy="0"  ixz="0"
+                 iyy="1" iyz="0"
+                 izz="1" />
+      </inertial> 
+      <visual>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <box size="0.05 0.05 0.05" />
+        </geometry>
+      </visual> 
+      <collision>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <box size="0.05 0.05 0.05" />
+        </geometry>
+      </collision>
+    </link>
+    <gazebo reference="arm_base">
+      <material>Gazebo/Red</material>
+      <mu1>50.0</mu1>
+      <mu2>50.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>1.0</kd>
+    </gazebo>
+    <joint name="arm_base_link" type="prismatic">
+      <parent link="box" />
+      <child link="arm_base" />
+      <limit effort="100.0" lower="-0.45" upper="0.45" velocity="0.5"/>
+      <origin xyz="0.0 0.0 0.325" rpy="0.0 0.0 0.0" />
+    </joint>
+
+    <link name="joint_a1">
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1" ixy="0"  ixz="0"
+                 iyy="1" iyz="0"
+                 izz="1" />
+      </inertial> 
+      <visual>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <box size="0.7 0.05 0.05" />
+        </geometry>
+      </visual> 
+      <collision>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <box size="0.7 0.05 0.05" />
+        </geometry>
+      </collision>
+    </link>
+    <gazebo reference="joint_a1">
+      <material>Gazebo/Red</material>
+      <mu1>50.0</mu1>
+      <mu2>50.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>1.0</kd>
+    </gazebo>
+    <joint name="joint_a1_link" type="prismatic">
+      <parent link="arm_base" />
+      <child link="joint_a1" />
+      <limit effort="100.0" lower="-0.35" upper="0.15" velocity="0.5"/>
+      <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 1.57" />
+    </joint>
+
+    <joint name="hand_joint" type="fixed">
+      <parent link="joint_a1" />
+      <child link="robotiq_85_adapter_link" />
+      <origin xyz="-0.3 0.0 -0.025" rpy="0.0 1.57 0.0" />
+    </joint>
+        
+</robot>

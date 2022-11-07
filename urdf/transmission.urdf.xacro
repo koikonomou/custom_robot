@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- <xacro:include filename="$(find pr_robot)/urdf/robotiq_model.xacro"/> -->
+  <xacro:macro name="robotiq_c2_model_gazebo" params="prefix">
+
+    <xacro:robotiq_c2_model prefix="${prefix}" />
+
+    <!-- transmission list -->
+    <transmission name="${prefix}tran1">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="joint_a1">
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}motor1">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    <transmission name="${prefix}tran2">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="arm_base">
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}motor2">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    <transmission name="${prefix}tran3">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="robotiq_85_left_knuckle_joint">
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}motor3">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+</robot>
