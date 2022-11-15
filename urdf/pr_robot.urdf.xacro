@@ -153,5 +153,5 @@
       <child link="robotiq_85_adapter_link" />
       <origin xyz="-0.3 0.0 -0.025" rpy="0.0 1.57 0.0" />
     </joint>
-        
+    <plugin name="my_plugin" filename="libcontact.so"/>    
 </robot>
