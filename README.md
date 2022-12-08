@@ -1,6 +1,6 @@
 # 2-finger custom robot
 
-## This package contain a custom robot moving in 2D with a 2-finger gripper for some tests.
+## This package contains a custom robot moving in 2D with a 2-finger gripper for some tests.
 
 <img src="imgs/custom_robot.png" width="200"/>
 
