@@ -489,6 +489,7 @@
           <contact>
             <collision>robotiq_85_left_finger_tip_link_collision</collision>
           </contact>
+          <update_rate>5</update_rate>
         </sensor>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
@@ -727,6 +728,7 @@
           <contact>
             <collision>robotiq_85_right_finger_tip_link_collision</collision>
           </contact>
+          <update_rate>5</update_rate>
         </sensor>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
@@ -1051,6 +1053,7 @@
           <contact>
             <collision>table_goal_collision</collision>
           </contact>
+          <update_rate>5</update_rate>
         </sensor>
       </link>
       <static>0</static>
